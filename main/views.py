@@ -4,13 +4,13 @@ from django.shortcuts import render, redirect, get_object_or_404
 from main.models import Product
 from main.forms import ProductForm
 def show_main(request):
-    product_list = Product.objects.all
+    product_list = Product.objects.all()
     context = {
         'store_name' : 'Ryan Rapopo',
         'name' : 'Muhammad Yufan Jonni',
         'npm' : '2406408602',
         'class' : 'PBP A',
-        'product_list' : product_list,
+        'product_list' : product_list
     }
     return render(request, "main.html", context)
 
