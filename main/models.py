@@ -17,7 +17,7 @@ class Product(models.Model):
     category = models.CharField(max_length=25, choices= CATEGORY_CHOICES, default='aksesoris')
     is_featured = models.BooleanField(default=False)
     stock = models.PositiveIntegerField(default=0)
-    rating =  models.FloatField(default=0.0, max_length=5.0)
+    rating =  models.FloatField(default=0.0)
     brand = models.CharField(max_length=255)
 
     def __str__(self):
