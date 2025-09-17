@@ -1,3 +1,5 @@
+{% extends 'base.html' %}
+{% block content %}
 <H1> {{store_name}} </H1>
 
 <h4>NPM: </h4>
@@ -6,3 +8,39 @@
 <p>{{ name }}<p>
 <h4>Class: </h4>
 <p>{{ class }}</p>
+
+<a href="{% url 'main:add_product' %}">
+  <button>+ Add Product</button>
+</a>
+
+<hr>
+
+{%if not product_list%}
+<p>Belum ada product.</p>
+{% else %}
+
+{% for product in product_list %}
+<div>
+  <h2><a href="{% url 'main:product_detail' product.id %}">{{ news.title }}</a></h2>
+
+  <p><b>{{ product.get_category_display }}</b>{% if product.is_featured %} | 
+    <b>Featured</b>{% endif %}|
+    <b>{{product.brand}}</b>|
+    <b>Rating</b>
+    <b>{{ product.rating }}</b> </p>
+
+  {% if product.thumbnail %}
+  <img src="{{ product.thumbnail }}" alt="thumbnail" width="150" height="100">
+  <br />
+  {% endif %}
+
+  <p>{{ product.description|truncatewords:25 }}...</p>
+
+  <p><a href="{% url 'main:product_detail' product.id %}"><button>Read More</button></a></p>
+</div>
+
+<hr>
+{% endfor %}
+
+{% endif %}
+{% endblock content %}

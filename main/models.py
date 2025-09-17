@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 class Product(models.Model):
     CATEGORY_CHOICES = [
@@ -8,13 +9,14 @@ class Product(models.Model):
 
     ]
 
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255)
-    price = models.IntegerField(default=0)
+    price = models.PositiveIntegerField(default=0)
     description = models.TextField()
     thumbnail = models.URLField(blank= True, null=True)
     category = models.CharField(max_length=25, choices= CATEGORY_CHOICES, default='aksesoris')
     is_featured = models.BooleanField(default=False)
-    stock = models.IntegerField(default=0)
+    stock = models.PositiveIntegerField(default=0)
     rating =  models.FloatField(default=0.0, max_length=5.0)
     brand = models.CharField(max_length=255)
 
