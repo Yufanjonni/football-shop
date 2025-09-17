@@ -24,7 +24,8 @@
 <div>
   <h2><a href="{% url 'main:product_detail' product.id %}">{{ product.name }}</a></h2>
 
-  <p><b>{{ product.get_category_display }}</b>{% if product.is_featured %} | 
+  <p><b>{{ product.get_category_display }}</b>
+    {% if product.is_featured %} | 
     <b>Featured</b>{% endif %}|
     <b>{{product.brand}}</b>|
     <b>Rating</b>

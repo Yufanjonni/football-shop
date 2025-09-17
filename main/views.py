@@ -10,7 +10,7 @@ def show_main(request):
         'name' : 'Muhammad Yufan Jonni',
         'npm' : '2406408602',
         'class' : 'PBP A',
-        'product_list' : product_list
+        'product_list' : product_list,
     }
     return render(request, "main.html", context)
 
