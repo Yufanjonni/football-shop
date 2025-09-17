@@ -14,7 +14,7 @@ class Product(models.Model):
     price = models.PositiveIntegerField(default=0)
     description = models.TextField()
     thumbnail = models.URLField(blank= True, null=True)
-    category = models.CharField(max_length=25, choices= CATEGORY_CHOICES, default='aksesoris')
+    category = models.CharField(max_length=30, choices= CATEGORY_CHOICES, default='aksesoris')
     is_featured = models.BooleanField(default=False)
     stock = models.PositiveIntegerField(default=0)
     rating =  models.FloatField(default=0.0)

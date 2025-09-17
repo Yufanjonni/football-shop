@@ -5,6 +5,7 @@ from main.models import Product
 from main.forms import ProductForm
 def show_main(request):
     product_list = Product.objects.all()
+    print(product_list)
     context = {
         'store_name' : 'Ryan Rapopo',
         'name' : 'Muhammad Yufan Jonni',
