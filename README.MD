@@ -1,3 +1,63 @@
+Tugas 4
+1.  AuthenticationForm adalah form bawaan Django yang digunakan untuk proses login. Form ini menyediakan field username dan password, melakukan validasi kredensial, dan mengembalikan objek user yang berhasil diautentikasi melalui form.get_user()
+
+Kelebihan
+    -Siap pakai, tidak perlu membuat form login manual.
+    -Validasi username & password aman dan sesuai standar Django.
+    -Terintegrasi langsung dengan sistem autentikasi Django (backend auth).
+
+Kekurangan 
+    -Default hanya mendukung login dengan username dan password. Jika ingin login dengan email/field lain maka perlu membuat custom form.
+    -Tidak menyediakan field tambahan seperti “remember me” tanpa override.
+    -Tidak ada tampilan bawaan, hanya form backend.
+
+2.  autentikasi adalah proses memverifikasi identitas user 
+    implementasi django terhadap autentikasi ditangani oleh authenticate(), login(), middleware AuthenticationMiddleware, dan atribut request.user.
+    
+    otorisasi adalah proses menentukan hak akses user
+    implementasi django terhadap autentikasi melalui sistem Permission, Group, User.has_perm(), decorator @permission_required, @login_required, dan class-based mixins seperti PermissionRequiredMixin.
+
+3.  kelebihan cookies
+        -disimpan disisi client sehingga tidak membebani server, karena data langsung disimpan di browser pengguna
+        -bisa diatur masa berlakunya, jadi cocok untuk “remember me” atau preferensi jangka panjang
+        -browser akan mengirim cookies setiap request ke domain yang sesuai
+        -bisa diakses dari JavaScript
+    kekurangan cookies
+        -kurang aman, rentan dicuri (misalnya lewat XSS) kalau tidak di-encrypt/secure
+        -ukuran yang terbatas biasanya maksimal sekitar 4KB per cookie, jadi tidak cocok untuk menyimpan data besar
+        -menambah overhead bandwidth karena setiap request ke server membawa cookie
+        -butuh perlindungan tambahan agar tidak disalahgunakan
+
+    kelebihan session
+        -lebih aman karenadata disimpan di sisi server, client hanya menyimpan session ID (biasanya lewat cookie)
+        -bisa menyimpan data yang besar karena server bebas menyimpan data kompleks (object, struktur data).
+        -session bisa otomatis berakhir saat browser ditutup atau setelah idle tertentu.
+        -cocok untuk data sensitif (misalnya data login, shopping cart) karena tidak terekspos langsung ke client.
+
+    kekurangan session
+        -membebani server, semakin banyak user aktif, semakin besar beban memori/penyimpanan di server
+        -butuh session sharing (misalnya Redis, database) jika pakai banyak server (load balancing)
+        -butuh cookie/URL rewriting untuk menyimpan session ID, tanpa itu, session tidak bisa dikenali
+        -rentan session hijacking jika session ID dicuri
+
+4.  Cookies tidak sepenuhnya aman secara default dan memiliki beberapa resiko seperti
+        -XSS (Cross Site Scripting): attacker bisa mencuri cookie jika cookie bisa diakses JS
+        -CSRF (Cross Site Request Forgery): attacker bisa menyalahgunakan cookie untuk melakukan aksi tanpa izin
+        -Manipulasi data: user bisa mengubah cookie di sisi client.
+    cara django menangani resiko tersebut adalah dengan
+        -menggunakan HttpOnly=True untuk session cookie (default) untuk mencegah akses JS ke cookie.
+        -SESSION_COOKIE_SECURE dan CSRF_COOKIE_SECURE (production), hanya kirim cookie lewat HTTPS
+        -sameSite option (Lax/Strict), mencegah CSRF
+        -CSRF protection via middleware & {% csrf_token %} di form
+        -session ID di-cookie dienkripsi & ditandatangani
+
+5.  
+    -menambahkan import UserCreationForm di views.py untuke mudahkan pembuatan formulir pendaftaran pengguna dalam      aplikasi web
+    -menambahkan fungsi register didalam views.py dan membuat file register.html lalu meroutingnya melalui urls.py
+    -menambahkan import authenticate, login, dan AuthenticationForm yang dapat digunakan untuk melakukan autentikasi dan login (jika autentikasi berhasil) di views.py.
+    -menambahkan fungsi login ke dalam views.py dan membuat file login.html lalu meroutingnya malalui urls.py
+    -menambahkan import logout di views.py
+    -menambahkan fungsi logout ke dalam views.py dan meroutingnya melalui urls.py
 Tugas 3
 1. data delivery diperlukan agar komponen-komponen didalam platform dapat saling berkomunikasi 
 2. menurut saya JSON lebih baik dari XML karena data yang dikeluarkan JSON lebih mudah dibaca karena model yang dipakai mirip dengan dictionary, dan json tidak banyak menggunakan tag yang membuatnya lebih ringan dan efisien

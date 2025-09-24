@@ -19,4 +19,11 @@
 <p><b>Harga </b><b>Rp{{product.price}}</b> | 
 Stok </b><b>{{product.stock}}</b></p>
 
+{% if product.user %}
+    <p>Seller: {{ news.user.username }}</p>
+{% else %}
+    <p>Seller: Anonymous</p>
+{% endif %}
+
+
 {% endblock content %}
