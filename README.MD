@@ -180,11 +180,15 @@ Cookies tidak sepenuhnya aman secara default
 
 ---
 
-## 5. Perbedaan `logout(request)` & `auth.logout(request)`
-- Keduanya sama-sama menghapus session.  
-- Biasanya digunakan `django.contrib.auth.logout`.  
+## 5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step
 
 
+-menambahkan import UserCreationForm di views.py untuke mudahkan pembuatan formulir pendaftaran pengguna dalam      aplikasi web
+    -menambahkan fungsi register didalam views.py dan membuat file register.html lalu meroutingnya melalui urls.py
+    -menambahkan import authenticate, login, dan AuthenticationForm yang dapat digunakan untuk melakukan autentikasi dan login (jika autentikasi berhasil) di views.py.
+    -menambahkan fungsi login ke dalam views.py dan membuat file login.html lalu meroutingnya malalui urls.py
+    -menambahkan import logout di views.py
+    -menambahkan fungsi logout ke dalam views.py dan meroutingnya melalui urls.py
 </details>
 
 ---
@@ -192,26 +196,76 @@ Cookies tidak sepenuhnya aman secara default
 <details>
 <summary>Tugas 5</summary>
 
-## 1. Konsep AJAX
+## 1. Jika terdapat beberapa CSS selector untuk suatu elemen HTML, jelaskan urutan prioritas pengambilan CSS selector tersebut!
+Jika ada beberapa CSS yang menargetkan elemen yang sama, browser akan memilih CSS yang lebih spesifik. Urutannya:
 
+1. **Inline style**
+    Contoh: `<div style="color: red;"></div>` → memiliki prioritas tertinggi.
 
+2. **ID selector (#id)**
+    Contoh:` #header { color: blue; }` → lebih spesifik daripada class.
+
+3. **Class, pseudo-class, attribute selector (.class, :hover, [type="text"])**
+    Contoh: `.menu { color: green; }`
+
+4. **Element selector (tag, seperti div, p, h1)**
+    Contoh: `p { color: black; }` → prioritas paling rendah.
+
+5. **Important (!important)**
+    Bisa menimpa aturan lain, tapi sebaiknya digunakan dengan hati-hati.
+
+---
 ## 2. Perbedaan Asynchronous vs Synchronous
+Responsive Design artinya desain web dapat menyesuaikan tampilan pada berbagai ukuran layar, seperti desktop, tablet, atau smartphone.
 
-## 3. Perbedaan `fetch()` & `$.ajax()`
+**Mengapa penting:**
+    -Banyak pengguna mengakses website melalui mobile atau tablet.
+    -Meningkatkan user experience dan aksesibilitas.
+    -Membantu SEO karena Google lebih menyukai website yang mobile-friendly.
 
+**Contoh aplikasi yang sudah menerapkan:**
+    -Google Docs
+    -Instagram web
 
-## 4. Implementasi di Django
+**Contoh aplikasi yang belum menerapkan:**
+    -Situs lama berita
 
+---
+## 3.  Jelaskan perbedaan antara margin, border, dan padding, serta cara untuk mengimplementasikan ketiga hal tersebut!
+Margin → ruang di luar elemen, memisahkan elemen dengan elemen lain.
+    Contoh: `margin: 10px;` → memberi jarak 10px di luar kotak elemen.
 
-## 5. Keamanan AJAX
+Border → garis tepi elemen.
+    Contoh: `border: 2px solid black;` → membuat kotak dengan garis 2px.
 
+Padding → ruang di dalam elemen, antara isi (content) dan border.
+    Contoh: `padding: 15px;` → jarak antara konten dan garis border.
 
-## 6. Kelebihan AJAX
+---
+## 4. Jelaskan konsep flex box dan grid layout beserta kegunaannya!
+**Konsep Flexbox**
+    -Elemen di dalam container bisa mudah disejajarkan secara horizontal maupun vertikal.
+    -Membantu membuat layout yang fleksibel dan responsif tanpa perlu banyak kalkulasi manual.
+    -Properti utamanya ditaruh di container (`display: flex;`), lalu anak-anaknya mengikuti aturan flex.
+
+**Kegunaan Flexbox**
+    -Membuat navbar dengan menu rata kanan & kiri.
+    -Menyusun card produk secara horizontal.
+    -Memusatkan konten di tengah layar dengan mudah.
+
+**Konsep Grid layout**
+    -Container dibagi menjadi baris (rows) dan kolom (columns).
+    -Elemen bisa ditempatkan di posisi tertentu di dalam grid dengan mudah.
+    -Cocok untuk membuat layout kompleks seperti dashboard, galeri foto, atau struktur halaman.
+
+**Kegunaan Grid layout**
+    -Membuat layout halaman penuh (header, sidebar, content, footer).
+    -Membuat galeri dengan baris & kolom yang teratur.
+    -Mengatur elemen agar responsif dalam bentuk kotak.
+
+---
+## 5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step
+
 
 </details>
-    -menambahkan import UserCreationForm di views.py untuke mudahkan pembuatan formulir pendaftaran pengguna dalam      aplikasi web
-    -menambahkan fungsi register didalam views.py dan membuat file register.html lalu meroutingnya melalui urls.py
-    -menambahkan import authenticate, login, dan AuthenticationForm yang dapat digunakan untuk melakukan autentikasi dan login (jika autentikasi berhasil) di views.py.
-    -menambahkan fungsi login ke dalam views.py dan membuat file login.html lalu meroutingnya malalui urls.py
-    -menambahkan import logout di views.py
-    -menambahkan fungsi logout ke dalam views.py dan meroutingnya melalui urls.py
+---   
