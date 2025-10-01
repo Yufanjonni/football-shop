@@ -3,11 +3,11 @@ from django.db import models
 from django.contrib.auth.models import User
 class Product(models.Model):
     CATEGORY_CHOICES = [
-        ('pakaian', 'Pakaian'),
-        ('aksesoris', 'Aksesoris'),
-        ('alat pijat pria', 'Alat Pijat Pria'),
-        ('perlengkapan olahraga', 'Perlengkapan Olahraga')
-
+        ('sportsware', 'Sportsware'),
+        ('accessories', 'Accessories'),
+        ('merchandise', 'Merchandise'),
+        ('jersey', 'Jersey'),
+        ('shoes', 'Shoes')
     ]
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
