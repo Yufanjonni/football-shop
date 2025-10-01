@@ -119,14 +119,21 @@ csrf_token diperlukan untuk meverifikasi bahwa yang mengirim form benar-benar us
 
 ## 1. Apa itu Django AuthenticationForm? Jelaskan juga kelebihan dan kekurangannya.
 `AuthenticationForm` adalah form bawaan Django yang digunakan untuk proses login. Form ini menyediakan field username dan password, melakukan validasi kredensial, dan mengembalikan objek user yang berhasil diautentikasi melalui `form.get_user()`
+
 **Kelebihan**
+    
     -Siap pakai, tidak perlu membuat form login manual.
+    
     -Validasi username & password aman dan sesuai standar Django.
+    
     -Terintegrasi langsung dengan sistem autentikasi Django (backend auth).
 
-**Kekurangan **
+**Kekurangan**
+    
     -Default hanya mendukung login dengan username dan password. Jika ingin login dengan email/field lain maka perlu membuat custom form.
+    
     -Tidak menyediakan field tambahan seperti “remember me” tanpa override.
+    
     -Tidak ada tampilan bawaan, hanya form backend.
 ---
 
@@ -244,24 +251,24 @@ Padding → ruang di dalam elemen, antara isi (content) dan border.
 ---
 ## 4. Jelaskan konsep flex box dan grid layout beserta kegunaannya!
 **Konsep Flexbox**
-    -Elemen di dalam container bisa mudah disejajarkan secara horizontal maupun vertikal.
-    -Membantu membuat layout yang fleksibel dan responsif tanpa perlu banyak kalkulasi manual.
-    -Properti utamanya ditaruh di container (`display: flex;`), lalu anak-anaknya mengikuti aturan flex.
+    1. Elemen di dalam container bisa mudah disejajarkan secara horizontal maupun vertikal.
+    2. Membantu membuat layout yang fleksibel dan responsif tanpa perlu banyak kalkulasi manual.
+    3. Properti utamanya ditaruh di container (`display: flex;`), lalu anak-anaknya mengikuti aturan flex.
 
 **Kegunaan Flexbox**
-    -Membuat navbar dengan menu rata kanan & kiri.
-    -Menyusun card produk secara horizontal.
-    -Memusatkan konten di tengah layar dengan mudah.
+    1. Membuat navbar dengan menu rata kanan & kiri.
+    2. Menyusun card produk secara horizontal.
+    3. Memusatkan konten di tengah layar dengan mudah.
 
 **Konsep Grid layout**
-    -Container dibagi menjadi baris (rows) dan kolom (columns).
-    -Elemen bisa ditempatkan di posisi tertentu di dalam grid dengan mudah.
-    -Cocok untuk membuat layout kompleks seperti dashboard, galeri foto, atau struktur halaman.
+    1. Container dibagi menjadi baris (rows) dan kolom (columns).
+    2. Elemen bisa ditempatkan di posisi tertentu di dalam grid dengan mudah.
+    3. Cocok untuk membuat layout kompleks seperti dashboard, galeri foto, atau struktur halaman.
 
 **Kegunaan Grid layout**
-    -Membuat layout halaman penuh (header, sidebar, content, footer).
-    -Membuat galeri dengan baris & kolom yang teratur.
-    -Mengatur elemen agar responsif dalam bentuk kotak.
+    1. Membuat layout halaman penuh (header, sidebar, content, footer).
+    2. Membuat galeri dengan baris & kolom yang teratur.
+    3. Mengatur elemen agar responsif dalam bentuk kotak.
 
 ---
 ## 5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step
