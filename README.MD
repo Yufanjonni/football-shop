@@ -122,19 +122,19 @@ csrf_token diperlukan untuk meverifikasi bahwa yang mengirim form benar-benar us
 
 **Kelebihan**
     
-    -Siap pakai, tidak perlu membuat form login manual.
-    
-    -Validasi username & password aman dan sesuai standar Django.
-    
-    -Terintegrasi langsung dengan sistem autentikasi Django (backend auth).
+-Siap pakai, tidak perlu membuat form login manual.
+
+-Validasi username & password aman dan sesuai standar Django.
+
+-Terintegrasi langsung dengan sistem autentikasi Django (backend auth).
 
 **Kekurangan**
     
-    -Default hanya mendukung login dengan username dan password. Jika ingin login dengan email/field lain maka perlu membuat custom form.
-    
-    -Tidak menyediakan field tambahan seperti “remember me” tanpa override.
-    
-    -Tidak ada tampilan bawaan, hanya form backend.
+-Default hanya mendukung login dengan username dan password. Jika ingin login dengan email/field lain maka perlu membuat custom form.
+
+-Tidak menyediakan field tambahan seperti “remember me” tanpa override.
+
+-Tidak ada tampilan bawaan, hanya form backend.
 ---
 
 ## 2. Apa perbedaan antara autentikasi dan otorisasi?
@@ -147,43 +147,68 @@ csrf_token diperlukan untuk meverifikasi bahwa yang mengirim form benar-benar us
 
 ## 3.  Apa saja kelebihan dan kekurangan session dan cookies dalam konteks menyimpan state di aplikasi web?
 **kelebihan cookies**
-    -disimpan disisi client sehingga tidak membebani server, karena data langsung disimpan di browser pengguna
-    -bisa diatur masa berlakunya, jadi cocok untuk “remember me” atau preferensi jangka panjang
-    -browser akan mengirim cookies setiap request ke domain yang sesuai
-    -bisa diakses dari JavaScript
+    
+-disimpan disisi client sehingga tidak membebani server, karena data langsung disimpan di browser pengguna
+
+-bisa diatur masa berlakunya, jadi cocok untuk “remember me” atau preferensi jangka panjang
+
+-browser akan mengirim cookies setiap request ke domain yang sesuai
+
+-bisa diakses dari JavaScript
 
 **kekurangan cookies**
-    -kurang aman, rentan dicuri (misalnya lewat XSS) kalau tidak di-encrypt/secure
-    -ukuran yang terbatas biasanya maksimal sekitar 4KB per cookie, jadi tidak cocok untuk menyimpan data besar
-    -menambah overhead bandwidth karena setiap request ke server membawa cookie
-    -butuh perlindungan tambahan agar tidak disalahgunakan
+    
+-kurang aman, rentan dicuri (misalnya lewat XSS) kalau tidak di-encrypt/secure
+
+-ukuran yang terbatas biasanya maksimal sekitar 4KB per cookie, jadi tidak cocok untuk menyimpan data besar
+
+-menambah overhead bandwidth karena setiap request ke server membawa cookie
+
+-butuh perlindungan tambahan agar tidak disalahgunakan
 
 **kelebihan session**
-    -lebih aman karenadata disimpan di sisi server, client hanya menyimpan session ID (biasanya lewat cookie)
-    -bisa menyimpan data yang besar karena server bebas menyimpan data kompleks (object, struktur data).
-    -session bisa otomatis berakhir saat browser ditutup atau setelah idle tertentu.
-    -cocok untuk data sensitif (misalnya data login, shopping cart) karena tidak terekspos langsung ke client.
+    
+-lebih aman karenadata disimpan di sisi server, client hanya menyimpan session ID (biasanya lewat cookie)
+
+-bisa menyimpan data yang besar karena server bebas menyimpan data kompleks (object, struktur data).
+
+-session bisa otomatis berakhir saat browser ditutup atau setelah idle tertentu.
+
+-cocok untuk data sensitif (misalnya data login, shopping cart) karena tidak terekspos langsung ke client.
 
 **kekurangan session**
-    -membebani server, semakin banyak user aktif, semakin besar beban memori/penyimpanan di server
-    -butuh session sharing (misalnya Redis, database) jika pakai banyak server (load balancing)
-    -butuh cookie/URL rewriting untuk menyimpan session ID, tanpa itu, session tidak bisa dikenali
-    -rentan session hijacking jika session ID dicuri 
+    
+-membebani server, semakin banyak user aktif, semakin besar beban memori/penyimpanan di server
+
+-butuh session sharing (misalnya Redis, database) jika pakai banyak server (load balancing)
+
+-butuh cookie/URL rewriting untuk menyimpan session ID, tanpa itu, session tidak bisa dikenali
+
+-rentan session hijacking jika session ID dicuri 
 
 ---
 
 ## 4. Apakah penggunaan cookies aman secara default dalam pengembangan web, atau apakah ada risiko potensial yang harus diwaspadai? Bagaimana Django menangani hal tersebut?
 Cookies tidak sepenuhnya aman secara default 
 **Resiko**
-    -XSS (Cross Site Scripting): attacker bisa mencuri cookie jika cookie bisa diakses JS
-    -CSRF (Cross Site Request Forgery): attacker bisa menyalahgunakan cookie untuk melakukan aksi tanpa izin
-    -Manipulasi data: user bisa mengubah cookie di sisi client.
+    
+-XSS (Cross Site Scripting): attacker bisa mencuri cookie jika cookie bisa diakses JS
+
+-CSRF (Cross Site Request Forgery): attacker bisa menyalahgunakan cookie untuk melakukan aksi tanpa izin
+
+-Manipulasi data: user bisa mengubah cookie di sisi client.
+
 **cara django menangani resiko**
-    -menggunakan HttpOnly=True untuk session cookie (default) untuk mencegah akses JS ke cookie.
-    -SESSION_COOKIE_SECURE dan CSRF_COOKIE_SECURE (production), hanya kirim cookie lewat HTTPS
-    -sameSite option (Lax/Strict), mencegah CSRF
-    -CSRF protection via middleware & {% csrf_token %} di form
-    -session ID di-cookie dienkripsi & ditandatangani
+    
+-menggunakan HttpOnly=True untuk session cookie (default) untuk mencegah akses JS ke cookie.
+
+-SESSION_COOKIE_SECURE dan CSRF_COOKIE_SECURE (production), hanya kirim cookie lewat HTTPS
+
+-sameSite option (Lax/Strict), mencegah CSRF
+
+-CSRF protection via middleware & {% csrf_token %} di form
+
+-session ID di-cookie dienkripsi & ditandatangani
 
 ---
 
@@ -191,11 +216,17 @@ Cookies tidak sepenuhnya aman secara default
 
 
 -menambahkan import UserCreationForm di views.py untuke mudahkan pembuatan formulir pendaftaran pengguna dalam      aplikasi web
-    -menambahkan fungsi register didalam views.py dan membuat file register.html lalu meroutingnya melalui urls.py
-    -menambahkan import authenticate, login, dan AuthenticationForm yang dapat digunakan untuk melakukan autentikasi dan login (jika autentikasi berhasil) di views.py.
-    -menambahkan fungsi login ke dalam views.py dan membuat file login.html lalu meroutingnya malalui urls.py
-    -menambahkan import logout di views.py
-    -menambahkan fungsi logout ke dalam views.py dan meroutingnya melalui urls.py
+
+-menambahkan fungsi register didalam views.py dan membuat file register.html lalu meroutingnya melalui urls.py
+
+-menambahkan import authenticate, login, dan AuthenticationForm yang dapat digunakan untuk melakukan autentikasi dan 
+login (jika autentikasi berhasil) di views.py.
+
+-menambahkan fungsi login ke dalam views.py dan membuat file login.html lalu meroutingnya malalui urls.py
+
+-menambahkan import logout di views.py
+
+-menambahkan fungsi logout ke dalam views.py dan meroutingnya melalui urls.py
 </details>
 
 ---
@@ -226,16 +257,18 @@ Jika ada beberapa CSS yang menargetkan elemen yang sama, browser akan memilih CS
 Responsive Design artinya desain web dapat menyesuaikan tampilan pada berbagai ukuran layar, seperti desktop, tablet, atau smartphone.
 
 **Mengapa penting:**
-    -Banyak pengguna mengakses website melalui mobile atau tablet.
-    -Meningkatkan user experience dan aksesibilitas.
-    -Membantu SEO karena Google lebih menyukai website yang mobile-friendly.
+
+-Banyak pengguna mengakses website melalui mobile atau tablet.
+
+-Meningkatkan user experience dan aksesibilitas.
+
+-Membantu SEO karena Google lebih menyukai website yang mobile-friendly.
 
 **Contoh aplikasi yang sudah menerapkan:**
-    -Google Docs
-    -Instagram web
+    Google Docs, Instagram web
 
 **Contoh aplikasi yang belum menerapkan:**
-    -Situs lama berita
+    Situs lama berita
 
 ---
 ## 3.  Jelaskan perbedaan antara margin, border, dan padding, serta cara untuk mengimplementasikan ketiga hal tersebut!
