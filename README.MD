@@ -135,6 +135,7 @@ csrf_token diperlukan untuk meverifikasi bahwa yang mengirim form benar-benar us
 -Tidak menyediakan field tambahan seperti “remember me” tanpa override.
 
 -Tidak ada tampilan bawaan, hanya form backend.
+
 ---
 
 ## 2. Apa perbedaan antara autentikasi dan otorisasi?
@@ -190,6 +191,7 @@ csrf_token diperlukan untuk meverifikasi bahwa yang mengirim form benar-benar us
 
 ## 4. Apakah penggunaan cookies aman secara default dalam pengembangan web, atau apakah ada risiko potensial yang harus diwaspadai? Bagaimana Django menangani hal tersebut?
 Cookies tidak sepenuhnya aman secara default 
+
 **Resiko**
     
 -XSS (Cross Site Scripting): attacker bisa mencuri cookie jika cookie bisa diakses JS
@@ -308,4 +310,5 @@ Padding → ruang di dalam elemen, antara isi (content) dan border.
 
 
 </details>
+
 ---   

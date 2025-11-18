@@ -1,11 +1,11 @@
 {% load humanize %}
-<div class="bg-white rounded-lg border border-gray-200 hover:shadow-lg transition-shadow duration-300 overflow-hidden">
+<div class="bg-white rounded-lg border border-gray-200 hover:shadow-lg transition-shadow duration-300 overflow-hidden h-full w-full">
   <!-- Thumbnail -->
-  <div class="aspect-[18/24] relative overflow-hidden">
+  <div class="aspect-[4/4] relative overflow-hidden">
     {% if product.thumbnail %}
       <img src="{{ product.thumbnail }}" alt="{{ product.name }}" class="w-full h-full object-cover">
     {% else %}
-      <div class="w-full h-full bg-gray-200"></div>
+      <div class="w-full h-full object-cover bg-gray-200"></div>
     {% endif %}
 
     <!-- Category Badge -->

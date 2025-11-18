@@ -3,13 +3,16 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
-from django.http import HttpResponse,HttpResponseRedirect
+from django.http import HttpResponse,HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from django.core import serializers
 from django.shortcuts import render, redirect, get_object_or_404
 from main.models import Product
 from main.forms import ProductForm
-
+import requests
+import json
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.html import strip_tags
 @login_required(login_url='/login')
 def show_main(request):
     filter_type = request.GET.get("filter", "all") 
@@ -80,8 +83,8 @@ def add_product(request):
     return render(request, "add_product.html", context)
 
 def edit_product(request, id):
-    news = get_object_or_404(Product, pk=id)
-    form = ProductForm(request.POST or None, instance=news)
+    product = get_object_or_404(Product, pk=id)
+    form = ProductForm(request.POST or None, instance=product)
     if form.is_valid() and request.method == 'POST':
         form.save()
         return redirect('main:show_main')
@@ -112,8 +115,45 @@ def show_xml(request):
 
 def show_json(request):
     product_list = Product.objects.all()
-    json_data = serializers.serialize("json", product_list)
-    return HttpResponse(json_data, content_type="application/json")
+    data = [
+        {
+            'id': str(product.id),
+            'name': product.name,
+            'price': product.price,
+            'description': product.description,
+            'thumbnail': product.thumbnail,
+            'category': product.category,
+            'is_featured': product.is_featured,
+            'stock': product.stock,
+            'rating': product.rating,
+            'brand': product.brand,
+            'user_id': product.user_id,
+        }
+        for product in product_list
+    ]
+
+    return JsonResponse(data, safe=False)
+
+def show_json_mine(request):
+    product_list = Product.objects.filter(user=request.user)
+    data = [
+        {
+            'id': str(product.id),
+            'name': product.name,
+            'price': product.price,
+            'description': product.description,
+            'thumbnail': product.thumbnail,
+            'category': product.category,
+            'is_featured': product.is_featured,
+            'stock': product.stock,
+            'rating': product.rating,
+            'brand': product.brand,
+            'user_id': product.user_id,
+        }
+        for product in product_list
+    ]
+
+    return JsonResponse(data, safe=False)
 
 def show_xml_by_id(request, product_id):
     try:
@@ -125,9 +165,72 @@ def show_xml_by_id(request, product_id):
 
 def show_json_by_id(request, product_id):
     try:
-        product_item = Product.objects.get(pk=product_id)
-        json_data = serializers.serialize("json", [product_item])
-        return HttpResponse(json_data, content_type="application/json")
-    except:
-        return HttpResponse(status=404)
+        product = Product.objects.select_related('user').get(pk=product_id)
+        data = {
+                'id': str(product.id),
+                'name': product.name,
+                'price': product.price,
+                'description': product.description,
+                'thumbnail': product.thumbnail,
+                'category': product.category,
+                'is_featured': product.is_featured,
+                'stock': product.stock,
+                'rating': product.rating,
+                'brand': product.brand,
+                'user_id': product.user_id,
+                'user_username': product.user.username if product.user_id else None,
+        }
+        return JsonResponse(data)
+    except Product.DoesNotExist:
+        return JsonResponse({'detail': 'Not found'}, status=404)
+    
+def proxy_image(request):
+    image_url = request.GET.get('url')
+    if not image_url:
+        return HttpResponse('No URL provided', status=400)
+    
+    try:
+        # Fetch image from external source
+        response = requests.get(image_url, timeout=10)
+        response.raise_for_status()
+        
+        # Return the image with proper content type
+        return HttpResponse(
+            response.content,
+            content_type=response.headers.get('Content-Type', 'image/jpeg')
+        )
+    except requests.RequestException as e:
+        return HttpResponse(f'Error fetching image: {str(e)}', status=500)
+    
+@csrf_exempt
+def add_product_flutter(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        name = strip_tags(data.get("name", ""))
+        price = strip_tags(data.get("price", ""))
+        description = strip_tags(data.get("description", ""))
+        thumbnail = data.get("thumbnail", "")
+        category = data.get("category", "")
+        is_featured = data.get("is_featured", False)
+        rating = strip_tags(data.get("rating", ""))
+        stock = strip_tags(data.get("stock", ""))
+        brand = strip_tags(data.get("brand", ""))
+        user = request.user
+
+        new_product = Product(
+            name = name,
+            price = price,
+            description = description,
+            thumbnail = thumbnail,
+            category = category,
+            is_featured = is_featured,
+            stock = stock,
+            brand = brand,
+            user = user
+        )
+        new_product.save()
+
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
 # Create your views here.
