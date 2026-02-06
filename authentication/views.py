@@ -5,6 +5,7 @@ from django.http import JsonResponse
 from django.contrib.auth.models import User
 import json
 @csrf_exempt
+#testing something
 def login(request):
     username = request.POST['username']
     password = request.POST['password']
